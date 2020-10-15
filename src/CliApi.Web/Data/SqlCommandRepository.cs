@@ -1,10 +1,18 @@
 using System.Collections.Generic;
 using CliApi.Web.Models;
+using System.Linq;
 
 namespace CliApi.Web.Data
 {
     public class SqlCommandRepository : ICommandRepository
     {
+        private readonly CommandContext _context;
+
+        public SqlCommandRepository(CommandContext context)
+        {
+            _context = context;
+        }
+
         public void Create(Command command)
         {
             throw new System.NotImplementedException();
@@ -17,12 +25,12 @@ namespace CliApi.Web.Data
 
         public IEnumerable<Command> GetAll()
         {
-            throw new System.NotImplementedException();
+            return _context.Commands.ToList();
         }
 
         public Command GetById(int id)
         {
-            throw new System.NotImplementedException();
+            return _context.Commands.FirstOrDefault(p => p.Id == id);
         }
 
         public bool SaveChanges()
