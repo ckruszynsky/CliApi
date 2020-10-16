@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using AutoMapper;
+using Newtonsoft.Json.Serialization;
 
 namespace CliApi.Web
 {
@@ -36,7 +37,12 @@ namespace CliApi.Web
             services.AddDbContext<CommandContext>(opt =>
                 opt.UseNpgsql(builder.ConnectionString)
             );
-            services.AddControllers();
+
+            services.AddControllers()
+            .AddNewtonsoftJson(s =>
+            {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
