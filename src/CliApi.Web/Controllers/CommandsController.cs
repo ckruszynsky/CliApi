@@ -85,5 +85,19 @@ namespace CliApi.Web.Controllers
             _repository.SaveChanges();
             return NoContent();
         }
+
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+            var commandModel = _repository.GetById(id);
+            if (commandModel == null)
+            {
+                return NotFound();
+            }
+
+            _repository.Delete(commandModel);
+            _repository.SaveChanges();
+            return NoContent();
+        }
     }
 }
