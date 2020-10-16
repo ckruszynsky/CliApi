@@ -24,7 +24,7 @@ namespace CliApi.Web.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Command>> GetAll() => Ok(_mapper.Map<IEnumerable<CommandReadDto>>(_repository.GetAll()));
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetById")]
         public ActionResult<Command> GetById(int id)
         {
             var commandItem = _repository.GetById(id);
@@ -33,6 +33,21 @@ namespace CliApi.Web.Controllers
                 return NotFound();
             }
             return Ok(_mapper.Map<CommandReadDto>(commandItem));
+        }
+
+        [HttpPost]
+        public ActionResult<CommandReadDto> Create(CommandCreateDto commandCreateDto)
+        {
+            var commandModel = _mapper.Map<Command>(commandCreateDto);
+            _repository.Create(commandModel);
+            _repository.SaveChanges();
+
+            var commandReadDto = _mapper.Map<CommandReadDto>(commandModel);
+
+            return CreatedAtRoute(nameof(GetById), new
+            {
+                Id = commandReadDto.Id
+            }, commandReadDto);
         }
     }
 }

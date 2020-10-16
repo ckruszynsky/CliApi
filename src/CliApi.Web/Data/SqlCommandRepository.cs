@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CliApi.Web.Models;
 using System.Linq;
@@ -15,7 +16,11 @@ namespace CliApi.Web.Data
 
         public void Create(Command command)
         {
-            throw new System.NotImplementedException();
+            if (command == null)
+            {
+                throw new ArgumentException(nameof(command));
+            }
+            _context.Commands.Add(command);
         }
 
         public void Delete(Command command)
@@ -35,7 +40,7 @@ namespace CliApi.Web.Data
 
         public bool SaveChanges()
         {
-            throw new System.NotImplementedException();
+            return (_context.SaveChanges() >= 0);
         }
 
         public void Update(Command command)
