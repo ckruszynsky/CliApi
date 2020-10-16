@@ -25,7 +25,13 @@ namespace CliApi.Web.Data
 
         public void Delete(Command command)
         {
-            throw new System.NotImplementedException();
+            if (command == null)
+            {
+                throw new ArgumentException(nameof(command));
+            }
+
+            _context.Commands.Remove(command);
+
         }
 
         public IEnumerable<Command> GetAll()
