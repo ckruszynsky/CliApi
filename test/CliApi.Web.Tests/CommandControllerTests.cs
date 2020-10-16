@@ -110,7 +110,56 @@ namespace CliApi.Web.Tests
             Assert.IsType<ActionResult<IEnumerable<CommandReadDto>>>(result);
         }
 
+        //**************************************************
+        //*
+        //GET   /api/commands/{id} Unit Tests
+        //*
+        //**************************************************
+        [Fact]
+        public void GetById_Returns404NotFound_WhenNonExistentIDProvided()
+        {
+            //Arrange 
+            mockRepo.Setup(repo => repo.GetById(0)).Returns(() => null);
+            var controller = new CommandsController(mockRepo.Object, mapper);
 
+            //Act
+            var result = controller.GetById(1);
+
+            //Assert
+            Assert.IsType<NotFoundResult>(result.Result);
+        }
+
+        [Fact]
+        public void GetById_Returns200OK__WhenValidIDProvided()
+        {
+            //Arrange 
+            mockRepo.Setup(repo =>
+              repo.GetById(1)).Returns(new Command { Id = 1, HowTo = "mock", Platform = "Mock", CommandLine = "Mock" });
+
+            var controller = new CommandsController(mockRepo.Object, mapper);
+
+            //Act
+            var result = controller.GetById(1);
+
+            //Assert
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public void GetByID_ReturnsCorrectResouceType_WhenValidIDProvided()
+        {
+            //Arrange 
+            mockRepo.Setup(repo =>
+              repo.GetById(1)).Returns(new Command { Id = 1, HowTo = "mock", Platform = "Mock", CommandLine = "Mock" });
+
+            var controller = new CommandsController(mockRepo.Object, mapper);
+
+            //Act
+            var result = controller.GetById(1);
+
+            //Assert
+            Assert.IsType<ActionResult<CommandReadDto>>(result);
+        }
 
         //**************************************************
         //*
