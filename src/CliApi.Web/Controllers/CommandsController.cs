@@ -5,6 +5,7 @@ using AutoMapper;
 using CliApi.Web.Data;
 using CliApi.Web.Dtos;
 using CliApi.Web.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CliApi.Web.Controllers
@@ -60,6 +61,26 @@ namespace CliApi.Web.Controllers
             }
 
             _mapper.Map(commandUpdateDto, commandModel);
+            _repository.Update(commandModel);
+            _repository.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public ActionResult PartialCommandUpdate(int id, JsonPatchDocument<CommandUpdateDto> patchDocument)
+        {
+            var commandModel = _repository.GetById(id);
+            if (commandModel == null)
+            {
+                return NotFound();
+            }
+            var commandToPatch = _mapper.Map<CommandUpdateDto>(commandModel);
+            patchDocument.ApplyTo(commandToPatch, ModelState);
+            if (!TryValidateModel(commandToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+            _mapper.Map(commandToPatch, commandModel);
             _repository.Update(commandModel);
             _repository.SaveChanges();
             return NoContent();
