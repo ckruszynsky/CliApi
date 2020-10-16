@@ -45,7 +45,7 @@ namespace CliApi.Web.Tests
         public void GetAll_ReturnsZeroResources_WhenDBIsEmpty()
         {
             //Arrange 
-            mockRepo.Setup(repo => repo.GetAll()).Returns(GetCommands(0));
+            mockRepo.Setup(repo => repo.GetAll()).Returns(GetByIds(0));
 
             var controller = new CommandsController(mockRepo.Object, mapper);
 
@@ -62,7 +62,7 @@ namespace CliApi.Web.Tests
         {
             //Arrange 
             mockRepo.Setup(repo =>
-              repo.GetAll()).Returns(GetCommands(1));
+              repo.GetAll()).Returns(GetByIds(1));
 
             var controller = new CommandsController(mockRepo.Object, mapper);
 
@@ -82,7 +82,7 @@ namespace CliApi.Web.Tests
         {
             //Arrange 
             mockRepo.Setup(repo =>
-              repo.GetAll()).Returns(GetCommands(1));
+              repo.GetAll()).Returns(GetByIds(1));
 
             var controller = new CommandsController(mockRepo.Object, mapper);
 
@@ -99,7 +99,7 @@ namespace CliApi.Web.Tests
         {
             //Arrange 
             mockRepo.Setup(repo =>
-              repo.GetAll()).Returns(GetCommands(1));
+              repo.GetAll()).Returns(GetByIds(1));
 
             var controller = new CommandsController(mockRepo.Object, mapper);
 
@@ -163,10 +163,48 @@ namespace CliApi.Web.Tests
 
         //**************************************************
         //*
+        //POST   /api/commands/ Unit Tests
+        //*
+        //**************************************************        
+        [Fact]
+        public void Create_ReturnsCorrectResourceType_WhenValidObjectSubmitted()
+        {
+            //Arrange 
+            mockRepo.Setup(repo =>
+              repo.GetById(1)).Returns(new Command { Id = 1, HowTo = "mock", Platform = "Mock", CommandLine = "Mock" });
+
+            var controller = new CommandsController(mockRepo.Object, mapper);
+
+            //Act
+            var result = controller.Create(new CommandCreateDto { });
+
+            //Assert
+            Assert.IsType<ActionResult<CommandReadDto>>(result);
+        }
+        [Fact]
+        public void Create_Returns201Created_WhenValidObjectSubmitted()
+        {
+            //Arrange 
+            mockRepo.Setup(repo =>
+              repo.GetById(1)).Returns(new Command { Id = 1, HowTo = "mock", Platform = "Mock", CommandLine = "Mock" });
+
+            var controller = new CommandsController(mockRepo.Object, mapper);
+
+            //Act
+            var result = controller.Create(new CommandCreateDto { });
+
+            //Assert
+            Assert.IsType<CreatedAtRouteResult>(result.Result);
+        }
+
+
+
+        //**************************************************
+        //*
         //Private Support Methods
         //*
         //**************************************************
-        private List<Command> GetCommands(int num)
+        private List<Command> GetByIds(int num)
         {
             var commands = new List<Command>();
             if (num > 0)
