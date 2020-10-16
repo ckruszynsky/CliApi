@@ -23,10 +23,10 @@ namespace CliApi.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Command>> GetAll() => Ok(_mapper.Map<IEnumerable<CommandReadDto>>(_repository.GetAll()));
+        public ActionResult<IEnumerable<CommandReadDto>> GetAll() => Ok(_mapper.Map<IEnumerable<CommandReadDto>>(_repository.GetAll()));
 
         [HttpGet("{id}", Name = "GetById")]
-        public ActionResult<Command> GetById(int id)
+        public ActionResult<CommandReadDto> GetById(int id)
         {
             var commandItem = _repository.GetById(id);
             if (commandItem == null)
