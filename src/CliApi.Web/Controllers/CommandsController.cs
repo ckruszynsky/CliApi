@@ -1,9 +1,11 @@
-using System.Windows.Input;
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+using System.Windows.Input;
+using AutoMapper;
 using CliApi.Web.Data;
+using CliApi.Web.Dtos;
 using CliApi.Web.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CliApi.Web.Controllers
 {
@@ -12,13 +14,15 @@ namespace CliApi.Web.Controllers
     public class CommandsController : ControllerBase
     {
         private readonly ICommandRepository _repository;
-        public CommandsController(ICommandRepository repository)
+        private readonly IMapper _mapper;
+        public CommandsController(ICommandRepository repository, IMapper mapper)
         {
+            _mapper = mapper;
             _repository = repository;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Command>> GetAll() => Ok(_repository.GetAll());
+        public ActionResult<IEnumerable<Command>> GetAll() => Ok(_mapper.Map<IEnumerable<CommandReadDto>>(_repository.GetAll()));
 
         [HttpGet("{id}")]
         public ActionResult<Command> GetById(int id)
@@ -28,7 +32,7 @@ namespace CliApi.Web.Controllers
             {
                 return NotFound();
             }
-            return Ok(commandItem);
+            return Ok(_mapper.Map<CommandReadDto>(commandItem));
         }
     }
 }
