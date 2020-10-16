@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using AutoMapper;
 
 namespace CliApi.Web
 {
@@ -36,6 +37,9 @@ namespace CliApi.Web
                 opt.UseNpgsql(builder.ConnectionString)
             );
             services.AddControllers();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<ICommandRepository, SqlCommandRepository>();
         }
 
