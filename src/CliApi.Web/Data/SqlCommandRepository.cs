@@ -45,7 +45,7 @@ namespace CliApi.Web.Data
 
         public void Update(Command command)
         {
-            throw new System.NotImplementedException();
+            //no implementation needed.
         }
     }
 }

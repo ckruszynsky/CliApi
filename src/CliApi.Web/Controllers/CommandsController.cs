@@ -49,5 +49,20 @@ namespace CliApi.Web.Controllers
                 Id = commandReadDto.Id
             }, commandReadDto);
         }
+
+        [HttpPut]
+        public ActionResult Update(int id, CommandUpdateDto commandUpdateDto)
+        {
+            var commandModel = _repository.GetById(id);
+            if (commandModel == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(commandUpdateDto, commandModel);
+            _repository.Update(commandModel);
+            _repository.SaveChanges();
+            return NoContent();
+        }
     }
 }
