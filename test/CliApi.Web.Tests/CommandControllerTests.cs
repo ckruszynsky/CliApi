@@ -197,7 +197,42 @@ namespace CliApi.Web.Tests
             Assert.IsType<CreatedAtRouteResult>(result.Result);
         }
 
+        //**************************************************
+        //*
+        //PUT   /api/commands/{id} Unit Tests
+        //*
+        //**************************************************
+        [Fact]
+        public void UpdateCommand_Returns204NoContent_WhenValidObjectSubmitted()
+        {
+            //Arrange 
+            mockRepo.Setup(repo =>
+              repo.GetById(1)).Returns(new Command { Id = 1, HowTo = "mock", Platform = "Mock", CommandLine = "Mock" });
 
+            var controller = new CommandsController(mockRepo.Object, mapper);
+
+            //Act
+            var result = controller.Update(1, new CommandUpdateDto { });
+
+            //Assert
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        [Fact]
+        public void UpdateCommand_Returns404NotFound_WhenNonExistentResourceIDSubmitted()
+        {
+            //Arrange 
+            mockRepo.Setup(repo =>
+              repo.GetById(0)).Returns(() => null);
+
+            var controller = new CommandsController(mockRepo.Object, mapper);
+
+            //Act
+            var result = controller.Update(0, new CommandUpdateDto { });
+
+            //Assert
+            Assert.IsType<NotFoundResult>(result);
+        }
 
         //**************************************************
         //*
