@@ -255,6 +255,44 @@ namespace CliApi.Web.Tests
             Assert.IsType<NotFoundResult>(result);
         }
 
+        //**************************************************
+        //*
+        //DELETE   /api/commands/{id} Unit Tests
+        //*
+        //**************************************************
+
+        [Fact]
+        public void Delete_Returns200OK_WhenValidResourceIDSubmitted()
+        {
+            //Arrange 
+            mockRepo.Setup(repo =>
+              repo.GetById(1)).Returns(new Command { Id = 1, HowTo = "mock", Platform = "Mock", CommandLine = "Mock" });
+
+            var controller = new CommandsController(mockRepo.Object, mapper);
+
+            //Act
+            var result = controller.Delete(1);
+
+            //Assert
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        [Fact]
+        public void Delete_Returns_404NotFound_WhenNonExistentResourceIDSubmitted()
+        {
+            //Arrange 
+            mockRepo.Setup(repo =>
+              repo.GetById(0)).Returns(() => null);
+
+            var controller = new CommandsController(mockRepo.Object, mapper);
+
+            //Act
+            var result = controller.Delete(0);
+
+            //Assert
+            Assert.IsType<NotFoundResult>(result);
+
+        }
 
 
 
