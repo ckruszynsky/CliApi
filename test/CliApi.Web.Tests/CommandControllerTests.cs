@@ -236,6 +236,31 @@ namespace CliApi.Web.Tests
 
         //**************************************************
         //*
+        //PATCH   /api/commands/{id} Unit Tests
+        //*
+        //**************************************************
+        [Fact]
+        public void PartialCommandUpdate_Returns404NotFound_WhenNonExistentResourceIDSubmitted()
+        {
+            //Arrange 
+            mockRepo.Setup(repo =>
+              repo.GetById(0)).Returns(() => null);
+
+            var controller = new CommandsController(mockRepo.Object, mapper);
+
+            //Act
+            var result = controller.PartialCommandUpdate(0, new Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<CommandUpdateDto> { });
+
+            //Assert
+            Assert.IsType<NotFoundResult>(result);
+        }
+
+
+
+
+
+        //**************************************************
+        //*
         //Private Support Methods
         //*
         //**************************************************
