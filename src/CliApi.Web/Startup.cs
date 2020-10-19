@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using AutoMapper;
 using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace CliApi.Web
 {
@@ -38,6 +39,12 @@ namespace CliApi.Web
                 opt.UseNpgsql(builder.ConnectionString)
             );
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt => {
+                    opt.Audience = Configuration["ResourceId"];
+                    opt.Authority = $"{Configuration["Instance"]}{Configuration["TenantId"]}";
+                });
+
             services.AddControllers()
             .AddNewtonsoftJson(s =>
             {
@@ -53,13 +60,16 @@ namespace CliApi.Web
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, CommandContext context)
         {
             context.Database.Migrate();
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
 

@@ -7,6 +7,7 @@ using CliApi.Web.Dtos;
 using CliApi.Web.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CliApi.Web.Controllers
 {
@@ -25,6 +26,7 @@ namespace CliApi.Web.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<CommandReadDto>> GetAll() => Ok(_mapper.Map<IEnumerable<CommandReadDto>>(_repository.GetAll()));
 
+        [Authorize]
         [HttpGet("{id}", Name = "GetById")]
         public ActionResult<CommandReadDto> GetById(int id)
         {
