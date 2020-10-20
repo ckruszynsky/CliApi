@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using AutoMapper;
-using CliApi.Web.Data;
+using CliApi.Core.Data;
+using CliApi.Core.Domain.Models;
 using CliApi.Web.Dtos;
-using CliApi.Web.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 

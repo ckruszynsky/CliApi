@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace CliApi.Web.Models
+namespace CliApi.Core.Domain.Models
 {
     public class Command
     {

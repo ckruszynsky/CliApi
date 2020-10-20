@@ -1,6 +1,6 @@
 using AutoMapper;
+using CliApi.Core.Domain.Models;
 using CliApi.Web.Dtos;
-using CliApi.Web.Models;
 
 namespace CliApi.Web.Profiles
 {

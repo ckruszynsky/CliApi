@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace CliApi.Web.Migrations
+namespace CliApi.Core.Data.Migrations
 {
     public partial class Add_CommandsEntity_To_DB : Migration
     {

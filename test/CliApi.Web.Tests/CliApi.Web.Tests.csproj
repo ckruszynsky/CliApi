@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\CliApi.Core\CliApi.Core.csproj" />
     <ProjectReference Include="..\..\src\CliApi.Web\CliApi.Web.csproj" />
   </ItemGroup>
 

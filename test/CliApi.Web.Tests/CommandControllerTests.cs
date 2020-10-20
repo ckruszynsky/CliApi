@@ -1,10 +1,11 @@
 using System;
-using CliApi.Web.Models;
+
 using Xunit;
 using System.Collections.Generic;
 using Moq;
 using AutoMapper;
-using CliApi.Web.Data;
+using CliApi.Core.Data;
+using CliApi.Core.Domain.Models;
 using CliApi.Web.Controllers;
 using CliApi.Web.Profiles;
 using Microsoft.AspNetCore.Mvc;

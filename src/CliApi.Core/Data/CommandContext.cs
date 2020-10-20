@@ -1,7 +1,7 @@
+using CliApi.Core.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using CliApi.Web.Models;
 
-namespace CliApi.Web.Data
+namespace CliApi.Core.Data
 {
     public class CommandContext : DbContext
     {

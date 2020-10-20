@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using CliApi.Web.Models;
+using CliApi.Core.Domain.Models;
 
-namespace CliApi.Web.Data
+namespace CliApi.Core.Data
 {
     public interface ICommandRepository
     {
