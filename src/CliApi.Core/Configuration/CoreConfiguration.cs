@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CliApi.Core.Data;
+using CliApi.Core.Data.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CliApi.Core.Configuration
@@ -13,6 +14,7 @@ namespace CliApi.Core.Configuration
         public static void AddCore(this IServiceCollection services)
         {
             services.AddScoped<ICommandRepository, SqlCommandRepository>();
+            services.AddScoped<IDbContextResolver,DbContextResolver<CommandContext>>();
         }
     }
 }
