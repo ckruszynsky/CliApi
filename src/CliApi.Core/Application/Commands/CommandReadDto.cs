@@ -1,4 +1,4 @@
-namespace CliApi.Web.Dtos
+namespace CliApi.Core.Application.Commands
 {
     public class CommandReadDto
     {

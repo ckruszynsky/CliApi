@@ -1,8 +1,7 @@
 using AutoMapper;
 using CliApi.Core.Domain.Models;
-using CliApi.Web.Dtos;
 
-namespace CliApi.Web.Profiles
+namespace CliApi.Core.Application.Commands
 {
     public class CommandsProfile : Profile
     {

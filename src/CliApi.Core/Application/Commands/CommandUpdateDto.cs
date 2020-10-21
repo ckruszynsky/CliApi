@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace CliApi.Web.Dtos
+namespace CliApi.Core.Application.Commands
 {
     public class CommandUpdateDto
     {

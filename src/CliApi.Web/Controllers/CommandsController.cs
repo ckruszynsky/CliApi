@@ -4,7 +4,7 @@ using System.Windows.Input;
 using AutoMapper;
 using CliApi.Core.Data;
 using CliApi.Core.Domain.Models;
-using CliApi.Web.Dtos;
+using CliApi.Core.Application.Commands;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
