@@ -1,17 +1,13 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection.Metadata;
+using AutoMapper;
+using CliApi.Core.Configuration;
+using CliApi.Core.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Npgsql;
-using AutoMapper;
-using CliApi.Core.Data;
 using Newtonsoft.Json.Serialization;
 
 namespace CliApi.Web
@@ -28,25 +24,10 @@ namespace CliApi.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            var builder = new NpgsqlConnectionStringBuilder();
-            builder.ConnectionString = Configuration.GetConnectionString("PostgreSqlConnection");
-            builder.Username = Configuration["UserID"];
-            builder.Password = Configuration["Password"];
-
-
-            services.AddDbContext<CommandContext>(opt =>
-                opt.UseNpgsql(builder.ConnectionString)
-            );
-
-            services.AddControllers()
-            .AddNewtonsoftJson(s =>
-            {
-                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            });
-
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-            services.AddScoped<ICommandRepository, SqlCommandRepository>();
+            services.AddEntityFrameWorkCore(Configuration,"PostgreSqlConnection");
+            services.AddControllersWithJsonContracts();
+            services.AddAutoMapperProfiles();
+            services.AddCore();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
