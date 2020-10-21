@@ -25,7 +25,7 @@ namespace CliApi.Core.Configuration
             (
                 opt =>
                 {
-                    opt.UseNpgsql(builder.ConnectionString);
+                    opt.UseNpgsql(builder.ConnectionString);                                        
                 }
             );
         }
