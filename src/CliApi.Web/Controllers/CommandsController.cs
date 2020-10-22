@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Windows.Input;
+using System.Threading.Tasks;
 using AutoMapper;
 using CliApi.Core.Data;
 using CliApi.Core.Domain.Models;
@@ -12,7 +12,7 @@ namespace CliApi.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CommandsController : ControllerBase
+    public class CommandsController : BaseController
     {
         private readonly ICommandRepository _repository;
         private readonly IMapper _mapper;
@@ -23,27 +23,30 @@ namespace CliApi.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<CommandReadDto>> GetAll() => Ok(_mapper.Map<IEnumerable<CommandReadDto>>(_repository.GetAll()));
+        public async Task<ActionResult<List.CommandEnvelope>> GetAll() 
+        {
+            return await Mediator.Send(new List.Query());
+        }
 
         [HttpGet("{id}", Name = "GetById")]
-        public ActionResult<CommandReadDto> GetById(int id)
+        public ActionResult<CommandDto> GetById(int id)
         {
             var commandItem = _repository.GetById(id);
             if (commandItem == null)
             {
                 return NotFound();
             }
-            return Ok(_mapper.Map<CommandReadDto>(commandItem));
+            return Ok(_mapper.Map<CommandDto>(commandItem));
         }
 
         [HttpPost]
-        public ActionResult<CommandReadDto> Create(CommandCreateDto commandCreateDto)
+        public ActionResult<CommandDto> Create(CommandCreateDto commandCreateDto)
         {
             var commandModel = _mapper.Map<Command>(commandCreateDto);
             _repository.Create(commandModel);
             _repository.SaveChanges();
 
-            var commandReadDto = _mapper.Map<CommandReadDto>(commandModel);
+            var commandReadDto = _mapper.Map<CommandDto>(commandModel);
 
             return CreatedAtRoute(nameof(GetById), new
             {
