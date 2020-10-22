@@ -55,29 +55,22 @@ namespace CliApi.Web.Controllers
         }
 
         [HttpPut]
-        public ActionResult Update(int id, CommandUpdateDto commandUpdateDto)
+        public async Task<ActionResult> Update(int id, Update.UpdateCommandRequest commandUpdateRequest)
         {
-            var commandModel = _repository.GetById(id);
-            if (commandModel == null)
-            {
-                return NotFound();
-            }
 
-            _mapper.Map(commandUpdateDto, commandModel);
-            _repository.Update(commandModel);
-            _repository.SaveChanges();
+            await Mediator.Send(commandUpdateRequest);
             return NoContent();
         }
 
         [HttpPatch("{id}")]
-        public ActionResult PartialCommandUpdate(int id, JsonPatchDocument<CommandUpdateDto> patchDocument)
+        public ActionResult PartialCommandUpdate(int id, JsonPatchDocument<Update.UpdateCommandRequest> patchDocument)
         {
             var commandModel = _repository.GetById(id);
             if (commandModel == null)
             {
                 return NotFound();
             }
-            var commandToPatch = _mapper.Map<CommandUpdateDto>(commandModel);
+            var commandToPatch = _mapper.Map<Update.UpdateCommandRequest>(commandModel);
             patchDocument.ApplyTo(commandToPatch, ModelState);
             if (!TryValidateModel(commandToPatch))
             {
