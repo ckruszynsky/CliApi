@@ -212,7 +212,7 @@ namespace CliApi.Web.Tests
             var controller = new CommandsController(mockRepo.Object, mapper);
 
             //Act
-            var result = controller.Update(1, new CommandUpdateDto { });
+            var result = controller.Update(1, new Update.UpdateCommandRequest { });
 
             //Assert
             Assert.IsType<NoContentResult>(result);
@@ -228,7 +228,7 @@ namespace CliApi.Web.Tests
             var controller = new CommandsController(mockRepo.Object, mapper);
 
             //Act
-            var result = controller.Update(0, new CommandUpdateDto { });
+            var result = controller.Update(0, new Update.UpdateCommandRequest { });
 
             //Assert
             Assert.IsType<NotFoundResult>(result);
@@ -249,7 +249,7 @@ namespace CliApi.Web.Tests
             var controller = new CommandsController(mockRepo.Object, mapper);
 
             //Act
-            var result = controller.PartialCommandUpdate(0, new Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<CommandUpdateDto> { });
+            var result = controller.PartialCommandUpdate(0, new Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<Update.UpdateCommandRequest> { });
 
             //Assert
             Assert.IsType<NotFoundResult>(result);

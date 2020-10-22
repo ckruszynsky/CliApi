@@ -55,10 +55,11 @@ namespace CliApi.Web.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(int id, Update.UpdateCommandRequest commandUpdateRequest)
+        public async Task<ActionResult> Update(int id, Update.UpdateCommandRequest request)
         {
 
-            await Mediator.Send(commandUpdateRequest);
+            request.Id = id;
+            await Mediator.Send(request);
             return NoContent();
         }
 

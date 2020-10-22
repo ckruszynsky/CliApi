@@ -9,8 +9,8 @@ namespace CliApi.Core.Application.Commands
         {
             CreateMap<Command, CommandDto>();
             CreateMap<Create.CreateCommandRequest, Command>();
-            CreateMap<CommandUpdateDto, Command>();
-            CreateMap<Command, CommandUpdateDto>();
+            CreateMap<Update.UpdateCommandRequest, Command>();
+            CreateMap<Command, Update.UpdateCommandRequest>();
         }
     }
 }
