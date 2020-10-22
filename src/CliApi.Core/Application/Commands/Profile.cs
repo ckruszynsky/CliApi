@@ -8,7 +8,7 @@ namespace CliApi.Core.Application.Commands
         public CommandsProfile()
         {
             CreateMap<Command, CommandDto>();
-            CreateMap<CommandCreateDto, Command>();
+            CreateMap<Create.CreateCommandRequest, Command>();
             CreateMap<CommandUpdateDto, Command>();
             CreateMap<Command, CommandUpdateDto>();
         }

@@ -176,7 +176,7 @@ namespace CliApi.Web.Tests
             var controller = new CommandsController(mockRepo.Object, mapper);
 
             //Act
-            var result = controller.Create(new CommandCreateDto { });
+            var result = controller.Create(new Create.CreateCommandRequest(){ });
 
             //Assert
             Assert.IsType<ActionResult<CommandDto>>(result);
@@ -191,7 +191,7 @@ namespace CliApi.Web.Tests
             var controller = new CommandsController(mockRepo.Object, mapper);
 
             //Act
-            var result = controller.Create(new CommandCreateDto { });
+            var result = controller.Create(new Create.CreateCommandRequest() { });
 
             //Assert
             Assert.IsType<CreatedAtRouteResult>(result.Result);
