@@ -40,18 +40,14 @@ namespace CliApi.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult<CommandDto> Create(CommandCreateDto commandCreateDto)
+        public async Task<ActionResult<CommandDto>> Create(Create.CreateCommandRequest request)
         {
-            var commandModel = _mapper.Map<Command>(commandCreateDto);
-            _repository.Create(commandModel);
-            _repository.SaveChanges();
-
-            var commandReadDto = _mapper.Map<CommandDto>(commandModel);
+            var id = await Mediator.Send(request);
 
             return CreatedAtRoute(nameof(GetById), new
             {
-                Id = commandReadDto.Id
-            }, commandReadDto);
+                Id = id
+            }, request);
         }
 
         [HttpPut]

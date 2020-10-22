@@ -26,7 +26,7 @@ namespace CliApi.Core.Data
 
           public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-           OnBeforeSaving();
+            OnBeforeSaving();
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
