@@ -84,16 +84,15 @@ namespace CliApi.Web.Controllers
         }
 
         [HttpDelete]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var commandModel = _repository.GetById(id);
-            if (commandModel == null)
-            {
-                return NotFound();
-            }
-
-            _repository.Delete(commandModel);
-            _repository.SaveChanges();
+            await Mediator.Send
+            (
+                new Delete.DeleteCommandRequest
+                {
+                    Id = id
+                }
+            );
             return NoContent();
         }
     }
