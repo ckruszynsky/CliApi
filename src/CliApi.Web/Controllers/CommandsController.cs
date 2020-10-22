@@ -44,10 +44,14 @@ namespace CliApi.Web.Controllers
         {
             var id = await Mediator.Send(request);
 
-            return CreatedAtRoute(nameof(GetById), new
-            {
-                Id = id
-            }, request);
+            return CreatedAtRoute
+            (
+                nameof(GetById), 
+                new
+                {
+                    Id = id
+                }, 
+                request);
         }
 
         [HttpPut]
