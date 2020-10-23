@@ -123,7 +123,7 @@ namespace CliApi.Web.Tests
             var controller = new CommandsController(mockRepo.Object, mapper);
 
             //Act
-            var result = controller.GetById(1);
+            var result = controller.Get(1);
 
             //Assert
             Assert.IsType<NotFoundResult>(result.Result);
@@ -139,7 +139,7 @@ namespace CliApi.Web.Tests
             var controller = new CommandsController(mockRepo.Object, mapper);
 
             //Act
-            var result = controller.GetById(1);
+            var result = controller.Get(1);
 
             //Assert
             Assert.IsType<OkObjectResult>(result.Result);
@@ -155,7 +155,7 @@ namespace CliApi.Web.Tests
             var controller = new CommandsController(mockRepo.Object, mapper);
 
             //Act
-            var result = controller.GetById(1);
+            var result = controller.Get(1);
 
             //Assert
             Assert.IsType<ActionResult<CommandDto>>(result);
@@ -234,27 +234,7 @@ namespace CliApi.Web.Tests
             Assert.IsType<NotFoundResult>(result);
         }
 
-        //**************************************************
-        //*
-        //PATCH   /api/commands/{id} Unit Tests
-        //*
-        //**************************************************
-        [Fact]
-        public void PartialCommandUpdate_Returns404NotFound_WhenNonExistentResourceIDSubmitted()
-        {
-            //Arrange 
-            mockRepo.Setup(repo =>
-              repo.GetById(0)).Returns(() => null);
-
-            var controller = new CommandsController(mockRepo.Object, mapper);
-
-            //Act
-            var result = controller.PartialCommandUpdate(0, new Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<Update.UpdateCommandRequest> { });
-
-            //Assert
-            Assert.IsType<NotFoundResult>(result);
-        }
-
+       
         //**************************************************
         //*
         //DELETE   /api/commands/{id} Unit Tests

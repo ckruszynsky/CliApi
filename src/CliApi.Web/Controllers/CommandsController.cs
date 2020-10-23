@@ -29,7 +29,7 @@ namespace CliApi.Web.Controllers
         }
 
         [HttpGet("{id}", Name = "Get")]
-        public ActionResult<CommandDto> GetById(int id)
+        public ActionResult<CommandDto> Get(int id)
         {
             var commandItem = _repository.GetById(id);
             if (commandItem == null)
@@ -44,14 +44,7 @@ namespace CliApi.Web.Controllers
         {
             var id = await Mediator.Send(request);
 
-            return CreatedAtRoute
-            (
-                nameof(GetById),
-                new
-                {
-                    Id = id
-                },
-                request);
+            return CreatedAtRoute( nameof(Get),new{ Id = id},request);
         }
 
         [HttpPut]
@@ -62,27 +55,7 @@ namespace CliApi.Web.Controllers
             await Mediator.Send(request);
             return NoContent();
         }
-
-        [HttpPatch("{id}")]
-        public ActionResult PartialCommandUpdate(int id, JsonPatchDocument<Update.UpdateCommandRequest> patchDocument)
-        {
-            var commandModel = _repository.GetById(id);
-            if (commandModel == null)
-            {
-                return NotFound();
-            }
-            var commandToPatch = _mapper.Map<Update.UpdateCommandRequest>(commandModel);
-            patchDocument.ApplyTo(commandToPatch, ModelState);
-            if (!TryValidateModel(commandToPatch))
-            {
-                return ValidationProblem(ModelState);
-            }
-            _mapper.Map(commandToPatch, commandModel);
-            _repository.Update(commandModel);
-            _repository.SaveChanges();
-            return NoContent();
-        }
-
+               
         [HttpDelete]
         public async Task<ActionResult> Delete(int id)
         {
