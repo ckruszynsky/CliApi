@@ -34,7 +34,7 @@ namespace CliApi.Core.Application.Commands
 
                 var commandModel = await dbSet.FindAsync(request.Id);
 
-                if(commandModel == null)
+                if (commandModel == null)
                 {
                     throw new Exception($"Command with ID: {request.Id} could not be found.");
                 }
@@ -43,7 +43,7 @@ namespace CliApi.Core.Application.Commands
 
                 var success = await _dbContextResolver.GetContext().SaveChangesAsync(cancellationToken) > 0;
 
-                if(success)
+                if (success)
                 {
                     return Unit.Value;
                 }

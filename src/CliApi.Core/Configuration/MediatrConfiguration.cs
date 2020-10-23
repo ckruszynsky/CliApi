@@ -7,7 +7,7 @@ namespace CliApi.Core.Configuration
 {
     public static class MediatrConfiguration
     {
-         public static void AddMediatr(this IServiceCollection services)
+        public static void AddMediatr(this IServiceCollection services)
         {
             services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
         }

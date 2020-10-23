@@ -12,12 +12,14 @@ namespace CliApi.Core.Application.Commands
 {
     public class List
     {
-        public class CommandEnvelope{
-            public List<CommandDto> Commands {get;set;}
-            public int Count {get;set;}            
+        public class CommandEnvelope
+        {
+            public List<CommandDto> Commands { get; set; }
+            public int Count { get; set; }
         }
 
-        public class Query: IRequest<CommandEnvelope>{
+        public class Query : IRequest<CommandEnvelope>
+        {
             public int? Limit { get; set; }
             public int? Offset { get; set; }
         }
@@ -37,7 +39,7 @@ namespace CliApi.Core.Application.Commands
                 var context = _contextResolver.GetContext();
 
                 var queryable = context.Set<Command>().AsQueryable();
-                
+
                 var commands = await queryable
                     .Skip(request.Offset ?? 0)
                     .Take(request.Limit ?? 25)
@@ -47,7 +49,7 @@ namespace CliApi.Core.Application.Commands
                 {
                     Commands = _mapper.Map<List<CommandDto>>(commands),
                     Count = queryable.Count()
-                };        
+                };
             }
         }
 

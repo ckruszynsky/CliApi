@@ -23,12 +23,12 @@ namespace CliApi.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List.CommandEnvelope>> GetAll() 
+        public async Task<ActionResult<List.CommandEnvelope>> GetAll()
         {
             return await Mediator.Send(new List.Query());
         }
 
-        [HttpGet("{id}", Name = "GetById")]
+        [HttpGet("{id}", Name = "Get")]
         public ActionResult<CommandDto> GetById(int id)
         {
             var commandItem = _repository.GetById(id);
@@ -46,11 +46,11 @@ namespace CliApi.Web.Controllers
 
             return CreatedAtRoute
             (
-                nameof(GetById), 
+                nameof(GetById),
                 new
                 {
                     Id = id
-                }, 
+                },
                 request);
         }
 

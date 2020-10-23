@@ -12,7 +12,7 @@ namespace CliApi.Core.Application.Commands
 
     public class Update
     {
-        public class UpdateCommandRequest: IRequest
+        public class UpdateCommandRequest : IRequest
         {
             [Required]
             public int Id { get; set; }
@@ -29,7 +29,7 @@ namespace CliApi.Core.Application.Commands
             public Handler(IDbContextResolver contextResolver, IMapper mapper)
             {
                 _contextResolver = contextResolver;
-                _mapper     = mapper;
+                _mapper = mapper;
             }
             public async Task<Unit> Handle(UpdateCommandRequest request, CancellationToken cancellationToken)
             {
@@ -38,7 +38,7 @@ namespace CliApi.Core.Application.Commands
                 var commandModel = await context.Set<Command>()
                     .FindAsync(request.Id);
 
-                if(commandModel == null)
+                if (commandModel == null)
                 {
                     throw new Exception($"The command with ID: {request.Id} was not found and could not be updated.");
                 }
@@ -47,7 +47,7 @@ namespace CliApi.Core.Application.Commands
 
                 var success = await context.SaveChangesAsync(cancellationToken) > 0;
 
-                if(success)
+                if (success)
                 {
                     return Unit.Value;
                 }

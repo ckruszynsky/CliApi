@@ -17,15 +17,15 @@ namespace CliApi.Core.Configuration
             var builder = new NpgsqlConnectionStringBuilder
             {
                 ConnectionString = configuration.GetConnectionString(name: connectionStringName),
-                Username         = configuration["UserID"],
-                Password         = configuration["Password"]
+                Username = configuration["UserID"],
+                Password = configuration["Password"]
             };
 
             services.AddDbContext<CommandContext>
             (
                 opt =>
                 {
-                    opt.UseNpgsql(builder.ConnectionString);                                        
+                    opt.UseNpgsql(builder.ConnectionString);
                 }
             );
         }

@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CliApi.Core.Data.Contracts
 {
-    public class DbContextResolver<TContext>:IDbContextResolver
-        where TContext:DbContext
+    public class DbContextResolver<TContext> : IDbContextResolver
+        where TContext : DbContext
     {
         private readonly TContext _context;
 

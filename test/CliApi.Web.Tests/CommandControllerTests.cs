@@ -70,11 +70,11 @@ namespace CliApi.Web.Tests
             var result = controller.GetAll();
 
             //Assert
-          //  var okResult = result.Result as OkObjectResult;
+            //  var okResult = result.Result as OkObjectResult;
 
             //var commands = okResult.Value as CommandEnvelope;
 
-          //Assert.Single(commands);
+            //Assert.Single(commands);
         }
 
         [Fact]
@@ -176,7 +176,7 @@ namespace CliApi.Web.Tests
             var controller = new CommandsController(mockRepo.Object, mapper);
 
             //Act
-            var result = controller.Create(new Create.CreateCommandRequest(){ });
+            var result = controller.Create(new Create.CreateCommandRequest() { });
 
             //Assert
             Assert.IsType<ActionResult<CommandDto>>(result);
