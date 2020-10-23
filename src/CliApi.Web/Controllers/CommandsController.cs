@@ -14,14 +14,7 @@ namespace CliApi.Web.Controllers
     [ApiController]
     public class CommandsController : BaseController
     {
-        private readonly ICommandRepository _repository;
-        private readonly IMapper _mapper;
-        public CommandsController(ICommandRepository repository, IMapper mapper)
-        {
-            _mapper = mapper;
-            _repository = repository;
-        }
-
+      
         [HttpGet]
         public async Task<ActionResult<List.CommandEnvelope>> GetAll()
         {
@@ -29,14 +22,9 @@ namespace CliApi.Web.Controllers
         }
 
         [HttpGet("{id}", Name = "Get")]
-        public ActionResult<CommandDto> Get(int id)
+        public async Task<ActionResult<CommandDto>> Get(int id)
         {
-            var commandItem = _repository.GetById(id);
-            if (commandItem == null)
-            {
-                return NotFound();
-            }
-            return Ok(_mapper.Map<CommandDto>(commandItem));
+            return await Mediator.Send(new Get.GetCommandRequest { Id = id});
         }
 
         [HttpPost]
