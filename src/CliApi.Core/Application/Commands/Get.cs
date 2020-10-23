@@ -16,17 +16,17 @@ namespace CliApi.Core.Application.Commands
 
         public class GetCommandRequestHandler : IRequestHandler<GetCommandRequest, CommandDto>
         {
-            private readonly IDbContextResolver _dbContextResolver;
+            private readonly IDbContextProvider _DbContextProvider;
             private readonly IMapper _mapper;
-            public GetCommandRequestHandler(IDbContextResolver dbContextResolver, IMapper mapper)
+            public GetCommandRequestHandler(IDbContextProvider DbContextProvider, IMapper mapper)
             {
                 _mapper = mapper;
-                _dbContextResolver = dbContextResolver;
+                _DbContextProvider = DbContextProvider;
 
             }
             public async Task<CommandDto> Handle(GetCommandRequest request, CancellationToken cancellationToken)
             {
-                var dbSet = _dbContextResolver.GetContext().Set<Command>();
+                var dbSet = _DbContextProvider.GetContext().Set<Command>();
                 var commandModel = await dbSet.FindAsync(request.Id);
                 
                 if(commandModel == null){

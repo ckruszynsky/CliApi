@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CliApi.Core.Data.Contracts
 {
-    public interface IDbContextResolver
+    public interface IDbContextProvider    
     {
         DbContext GetContext();
     }

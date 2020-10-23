@@ -2,16 +2,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CliApi.Core.Data.Contracts
 {
-    public class DbContextResolver<TContext> : IDbContextResolver
+    public class DbContextProvider<TContext> : IDbContextProvider
         where TContext : DbContext
     {
-        private readonly TContext _context;
+        private readonly DbContext _context;
 
-        public DbContextResolver(TContext context)
+        public DbContextProvider(TContext context)
         {
             _context = context;
         }
 
         public DbContext GetContext() => _context;
+
+      
     }
 }

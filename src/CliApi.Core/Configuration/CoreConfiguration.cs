@@ -13,7 +13,7 @@ namespace CliApi.Core.Configuration
     {
         public static void AddCore(this IServiceCollection services)
         {
-            services.AddScoped<IDbContextResolver, DbContextResolver<CommandContext>>();
+            services.AddScoped<IDbContextProvider, DbContextProvider<CommandContext>>();
         }
     }
 }

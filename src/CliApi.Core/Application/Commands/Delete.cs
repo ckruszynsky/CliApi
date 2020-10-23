@@ -21,15 +21,15 @@ namespace CliApi.Core.Application.Commands
 
         public class Handler : IRequestHandler<DeleteCommandRequest>
         {
-            private readonly IDbContextResolver _dbContextResolver;
+            private readonly IDbContextProvider _DbContextProvider;
 
-            public Handler(IDbContextResolver dbContextResolver)
+            public Handler(IDbContextProvider DbContextProvider)
             {
-                _dbContextResolver = dbContextResolver;
+                _DbContextProvider = DbContextProvider;
             }
             public async Task<Unit> Handle(DeleteCommandRequest request, CancellationToken cancellationToken)
             {
-                DbSet<Command> dbSet = _dbContextResolver.GetContext()
+                DbSet<Command> dbSet = _DbContextProvider.GetContext()
                     .Set<Command>();
 
                 var commandModel = await dbSet.FindAsync(request.Id);
@@ -41,7 +41,7 @@ namespace CliApi.Core.Application.Commands
 
                 dbSet.Remove(commandModel);
 
-                var success = await _dbContextResolver.GetContext().SaveChangesAsync(cancellationToken) > 0;
+                var success = await _DbContextProvider.GetContext().SaveChangesAsync(cancellationToken) > 0;
 
                 if (success)
                 {

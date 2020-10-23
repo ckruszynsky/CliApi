@@ -26,10 +26,10 @@ namespace CliApi.Core.Application.Commands
 
         public class Handler : IRequestHandler<Query, CommandEnvelope>
         {
-            private readonly IDbContextResolver _contextResolver;
+            private readonly IDbContextProvider _contextResolver;
             private readonly IMapper _mapper;
 
-            public Handler(IDbContextResolver contextResolver, IMapper mapper)
+            public Handler(IDbContextProvider contextResolver, IMapper mapper)
             {
                 _contextResolver = contextResolver;
                 _mapper = mapper;
