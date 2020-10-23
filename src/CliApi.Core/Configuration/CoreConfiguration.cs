@@ -13,7 +13,6 @@ namespace CliApi.Core.Configuration
     {
         public static void AddCore(this IServiceCollection services)
         {
-            services.AddScoped<ICommandRepository, SqlCommandRepository>();
             services.AddScoped<IDbContextResolver, DbContextResolver<CommandContext>>();
         }
     }
