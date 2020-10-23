@@ -43,6 +43,8 @@ namespace CliApi.Web
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
 
+            app.ApplyDataSeeds(env);
+
         }
     }
 }

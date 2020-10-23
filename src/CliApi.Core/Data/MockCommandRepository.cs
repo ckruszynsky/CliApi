@@ -4,7 +4,7 @@ using CliApi.Core.Domain.Models;
 
 namespace CliApi.Core.Data
 {
-    public class MockCommandRepository : ICommandRepository
+    public class MockCommandRepository 
     {
         private IEnumerable<Command> _commands = new List<Command>
         {
