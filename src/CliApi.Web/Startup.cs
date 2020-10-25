@@ -3,12 +3,15 @@ using System.Reflection.Metadata;
 using AutoMapper;
 using CliApi.Core.Configuration;
 using CliApi.Core.Data;
+using CliApi.Web.Diagnostics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
+using Serilog;
 
 namespace CliApi.Web
 {
@@ -32,12 +35,16 @@ namespace CliApi.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddSerilog();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<SerilogMiddleware>();
 
             app.UseRouting();
 
